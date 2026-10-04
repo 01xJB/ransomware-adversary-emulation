@@ -1,0 +1,4 @@
+smbprotocol
+psutil
+impacket
+pycryptodome

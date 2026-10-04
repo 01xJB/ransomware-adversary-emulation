@@ -261,8 +261,8 @@ class NetworkTriage:
             description="SMB network share scanner.",
             epilog=(
                 "Examples:\n"
-                "  python scanner.py -d UNDERWRLD -u baphomet -p password\n"
-                "  python scanner.py -ptt"
+                "  python emulate.py -d UNDERWRLD -u baphomet -p password\n"
+                "  python emulate.py -ptt"
             ),
             formatter_class=argparse.RawDescriptionHelpFormatter
         )

@@ -1,11 +1,11 @@
 <div align="center">
 
-# ransomware-adversary-emulation
+# Identity-Estimation
 
-**Ransomware Adversary Emulation for Authorized Security Research and Education**
+**Image-Based Age and Gender Estimation for Research and Educational Use**
 
-![License](https://img.shields.io/github/license/01xJB/ransomware-adversary-emulation?color=blue&style=for-the-badge)
-![Version](https://img.shields.io/badge/version-3.1.0-success?style=for-the-badge)
+![License](https://img.shields.io/github/license/01xJB/Identity-Estimation?color=blue&style=for-the-badge)
+![Version](https://img.shields.io/github/v/tag/01xJB/Identity-Estimation?color=blue&style=for-the-badge)
 ![Python](https://img.shields.io/badge/python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Status](https://img.shields.io/badge/status-active-brightgreen?style=for-the-badge)
 
@@ -15,103 +15,26 @@
 
 ## Overview
 
-`ransomware-adversary-emulation` is an **educational security research tool designed to simulate ransomware-style activity within controlled and authorized environments**.
+`Identity-Estimation` is a Python-based computer vision project designed to estimate a person's **age and gender from an input image**.
 
-The project was created to provide hands-on experience with the techniques, network behavior, authentication mechanisms, file discovery, and attack paths that defenders may encounter during a ransomware incident.
+The project was originally inspired by [smahesh29](https://github.com/smahesh29) and refined to provide a more streamlined implementation and more accurate estimation results.
 
-Rather than treating ransomware solely as a theoretical threat, this project provides a way to study how ransomware-style activity can interact with an **Active Directory environment, Windows hosts, SMB infrastructure, and network shares**.
+The tool can be used for:
 
-The project can be used for:
+- Computer vision experimentation
+- Age estimation research
+- Identity and demographic estimation research
+- Application prototyping
+- Controlled age-verification experiments
+- Educational machine-learning projects
 
-- Security research and experimentation
-- Red team and adversary-emulation exercises
-- Blue team detection engineering
-- SIEM and EDR validation
-- Incident-response training
-- Active Directory security testing
-- Network segmentation testing
-- Ransomware preparedness assessments
-- Cybersecurity education and lab environments
-
-> ## Authorized Use Only
+> ## Responsible Use
 >
-> This project is intended **exclusively for authorized security research, education, and controlled laboratory environments**.
+> This project is intended for **research, education, experimentation, and authorized application development**.
 >
-> Do not deploy this project against systems, networks, accounts, files, or data that you do not own or have explicit authorization to test.
+> Age and gender estimation from images is inherently probabilistic and should not be treated as a definitive determination of a person's identity, age, or gender.
 >
-> The author assumes no responsibility for damage, data loss, unauthorized access, or other consequences resulting from misuse of this software.
-
----
-
-## Educational Purpose
-
-Ransomware incidents are not limited to encrypting files.
-
-A realistic ransomware intrusion can involve multiple stages, including:
-
-1. Initial access
-2. Authentication
-3. Network and host discovery
-4. Active Directory enumeration
-5. Credential usage
-6. SMB and network-share discovery
-7. Lateral movement
-8. File discovery
-9. Data encryption
-10. Detection and incident response
-
-This project focuses on helping security practitioners understand **what these activities can look like from both the attacker and defender perspectives**.
-
-A controlled lab can be used to observe questions such as:
-
-- What systems are discoverable from a compromised workstation?
-- Which network shares are accessible to a compromised identity?
-- What authentication mechanisms are being used?
-- What activity would appear in Windows security logs?
-- What network traffic would an EDR or NDR solution observe?
-- Can network segmentation limit lateral movement?
-- Can an organization detect unusual SMB activity?
-- What happens when a highly privileged account is compromised?
-- Which defensive controls prevent or limit ransomware-style behavior?
-
-The goal is to turn these questions into **repeatable security experiments**.
-
----
-
-## Adversary Emulation
-
-The project is designed around the concept of **adversary emulation**.
-
-Instead of attempting to reproduce a specific real-world ransomware family, the tool reproduces selected behaviors associated with ransomware operations in order to evaluate defensive controls.
-
-This allows defenders to build controlled scenarios such as:
-
-```text
-Compromised Host
-      |
-      v
-Authentication
-      |
-      v
-Network Discovery
-      |
-      v
-Host / SMB Discovery
-      |
-      v
-Network Share Discovery
-      |
-      v
-File Discovery
-      |
-      v
-Controlled Encryption Simulation
-      |
-      v
-Detection / Response
-```
-
-Each stage can be observed through security telemetry and used to evaluate defensive capabilities.
+> Do not use this software to make high-impact decisions about individuals without appropriate safeguards, consent, and additional verification methods.
 
 ---
 
@@ -119,244 +42,282 @@ Each stage can be observed through security telemetry and used to evaluate defen
 
 | | |
 |---|---|
-| 🎯 **Network Discovery** | Identifies interconnected network ranges and discovers accessible Windows hosts and network shares within the authorized environment. |
-| 🔐 **Authentication** | Supports authenticated interaction with Windows environments using supplied domain credentials or the current Windows authentication context. |
-| 🧭 **SMB Discovery** | Discovers accessible SMB resources and network shares that are visible to the authenticated identity. |
-| 📂 **File Discovery** | Identifies files available through discovered systems and network shares for controlled testing. |
-| 🔒 **Encryption Simulation** | Provides an optional encryption mode for controlled laboratory environments to reproduce the impact associated with ransomware-style file encryption. |
-| 🔑 **Decryption** | Supports restoration of files using the generated/provided decryption key. |
-| 🧪 **Lab Research** | Can be incorporated into isolated Active Directory environments for repeatable security experiments. |
+| 🎯 **Age Estimation** | Estimates an individual's age range from an input image. |
+| 👤 **Gender Estimation** | Provides an estimated gender classification based on the trained model. |
+| 📊 **CSV Records** | Optionally stores estimation results in CSV files for later analysis. |
+| 🏷️ **Image Aliases** | Allows images to be associated with usernames, aliases, or other identifiers. |
+| 🖼️ **Image-Based Input** | Accepts local image files for analysis. |
+| ⚙️ **Model Configuration** | Allows model parameters and age ranges to be adjusted for experimentation. |
 
 ---
 
-## Defensive Research Use Cases
+## How It Works
 
-This project can be particularly useful when paired with defensive security tooling.
+The project processes an input image and uses pre-trained computer-vision models to generate age and gender estimates.
 
-For example, a controlled Active Directory lab could contain:
+A typical workflow looks like:
 
 ```text
-             Active Directory
-                    |
-             +------+------+
-             |             |
-          DC01           FILE01
-             |             |
-             +------+------+
-                    |
-              WORKSTATION01
+Input Image
+     |
+     v
+Face Detection
+     |
+     v
+Feature Extraction
+     |
+     v
+Age / Gender Models
+     |
+     +----------------+
+     |                |
+     v                v
+Age Estimate     Gender Estimate
+     |                |
+     +-------+--------+
+             |
+             v
+       Optional CSV Record
 ```
 
-A security team could then monitor the workstation while performing an authorized emulation and evaluate:
-
-- Windows Event Logs
-- Sysmon telemetry
-- EDR detections
-- SIEM alerts
-- SMB activity
-- Authentication events
-- Network connections
-- File-system activity
-- Suspicious process behavior
-- Lateral-movement indicators
-
-This makes the project useful not only for offensive security training, but also for **detection engineering and incident-response validation**.
-
----
-
-## Research and Learning Goals
-
-The project can be used to gain practical experience with:
-
-### Active Directory
-
-- Domain authentication
-- Windows security principals
-- Kerberos authentication
-- SMB
-- Network shares
-- Domain-host relationships
-- Privilege boundaries
-
-### Network Security
-
-- Network discovery
-- Subnet identification
-- Host discovery
-- SMB enumeration
-- Network segmentation
-- Lateral movement concepts
-
-### Defensive Security
-
-- Detection engineering
-- SIEM telemetry
-- EDR telemetry
-- Windows logging
-- Incident response
-- Ransomware preparedness
-- Security-control validation
-
-### Adversary Emulation
-
-- Modeling attacker behavior
-- Reproducing attack stages
-- Building repeatable security exercises
-- Measuring defensive visibility
-- Validating security controls
+The resulting age estimate is represented as an age range rather than an exact age.
 
 ---
 
 ## Requirements
 
-- Python 3.7+
-- Windows/Active Directory laboratory environment for AD-related testing
-- Dependencies in [`requirements.txt`](requirements.txt)
-
-Dependencies include:
-
-- `impacket`
-- `psutil`
-- `pycryptodome`
-- `smbprotocol`
+- Python 3.x
+- Dependencies listed in [`requirements.txt`](requirements.txt)
+- Pre-trained model files
+- A supported image containing a detectable face
 
 ---
 
 ## Installation
 
+### Clone the Repository
+
 ```bash
-git clone https://github.com/01xJB/ransomware-adversary-emulation.git
-cd ransomware-adversary-emulation
+git clone https://github.com/01xJB/Identity-Estimation.git
+cd Identity-Estimation
+```
+
+### Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
+
+---
+
+## Pre-Trained Models
+
+The pre-trained model files are distributed separately because of GitHub's individual file-size limitations.
+
+Download the model archive from the following Mega.nz repository:
+
+```text
+https://mega.nz/file/6vYkzArR#IFVD61aWDJGJTswegk8xjr2_1OEwNBg21QK2eVEAFbk
+```
+
+Extract the contents of `models.zip` into the same directory as the Python program.
+
+Your directory should resemble:
+
+```text
+Identity-Estimation/
+├── main.py
+├── requirements.txt
+├── models/
+│   └── ...
+└── ...
 ```
 
 ---
 
 ## Usage
 
-```text
-usage: main.py [-h] [-d DOMAIN] [-u USERNAME] [-p PASSWORD] [-dc DECRYPTION_KEY] [-en] [-ptt]
+### Prepare an Image
 
-SMB network share scanner.
+Place a clear image containing the person you want to analyze in the project directory.
 
-options:
-  -h, --help
-                        show this help message and exit
-
-  -d DOMAIN, --domain DOMAIN
-                        Windows domain name.
-
-  -u USERNAME, --username USERNAME
-                        Username to authenticate with.
-
-  -p PASSWORD, --password PASSWORD
-                        Password to authenticate with.
-
-  -dc DECRYPTION_KEY, --decryption-key DECRYPTION_KEY
-                        Provide a decryption key to decrypt all files.
-
-  -en, --encrypt
-                        Encrypt all files discovered on systems and network shares.
-
-  -ptt
-                        Use the current Windows authentication context.
-```
-
-### Authentication
-
-A username and password can be supplied when testing an authorized Active Directory environment.
-
-Alternatively, `-ptt` can be used to operate using the current Windows authentication context.
-
-Example:
+### Run the Program
 
 ```bash
-python emulate.py -d UNDERWRLD -u baphomet -p password
+python3 main.py
 ```
 
-Using the current Windows authentication context:
+The program will prompt you for information such as whether the results should be saved and which CSV file should be used.
 
-```bash
-python emulate.py -ptt
-```
-
-### Encryption Simulation
-
-Encryption functionality should only be used inside an **isolated, disposable laboratory environment containing test data**.
-
-```bash
-python emulate.py -ptt -en
-```
-
-The encryption functionality is intended to reproduce the **defensive impact and telemetry associated with ransomware-style encryption**, allowing security teams to evaluate their detection and response capabilities.
-
----
-
-## Command-Line Options
-
-| Flag | Description |
-|---|---|
-| `-h`, `--help` | Prints the help menu |
-| `-u`, `--username` | Username used for authentication |
-| `-p`, `--password` | Password used for authentication |
-| `-d`, `--domain` | Windows domain name |
-| `-dc`, `--decryption-key` | Provides a decryption key for restoring encrypted test files |
-| `-en`, `--encrypt` | Enables controlled encryption testing |
-| `-ptt`, `--ptt` | Uses the current Windows authentication context |
-
----
-
-## Recommended Lab Environment
-
-For safe experimentation, use an isolated environment containing disposable systems and test data.
-
-A basic environment could consist of:
+For example:
 
 ```text
-                Isolated Lab Network
-                        |
-              +---------+---------+
-              |                   |
-           DC01                FILE01
-      Active Directory       SMB Shares
-              |
-              |
-         WORKSTATION01
-              |
-              |
-      Adversary Emulation
+Do you want to save results to a CSV file? (yes/no): yes
+Enter the CSV file name: users
+Enter an alias for the image (optional): myself
 ```
 
-Recommended defensive tooling includes:
+The resulting estimation may look similar to:
 
-- Windows Event Logging
-- Sysmon
-- Microsoft Defender
-- EDR/XDR platforms
-- SIEM platforms
-- Network monitoring
-- Centralized log collection
+```text
+Gender: Male
+Age: 18-20 years
+```
 
-The lab should be isolated from production systems and contain **no sensitive or irreplaceable data**.
+If the same CSV file is selected for multiple scans, additional results can be appended to the existing records.
 
 ---
 
-## Detection Engineering
+## Windows Usage
 
-One of the primary educational goals of this project is to help defenders understand the telemetry generated by ransomware-style behavior.
+### Create a Virtual Environment
 
-A security team can use the project to develop and validate detections for:
+```bash
+python3 -m venv venv
+```
 
-- Unusual authentication activity
-- Abnormal SMB connections
-- Large-scale file access
-- Suspicious file modifications
-- Rapid file encryption
-- Unexpected access to network shares
-- Lateral movement
-- Abnormal activity from compromised accounts
+Alternatively, specify the path to your Python installation:
 
-The resulting telemetry can then be investigated through a SIEM or EDR platform to determine whether the organization's controls provide sufficient visibility.
+```bash
+C:\Users\USER\AppData\Local\Programs\PythonX\python.exe -m venv venv
+```
+
+### Activate the Virtual Environment
+
+```powershell
+.\venv\Scripts\activate
+```
+
+### Install Requirements
+
+```bash
+pip install -r requirements.txt
+```
+
+### Run the Program
+
+```bash
+python main.py --image image.jpg
+```
+
+For convenience, the image can be placed in the same directory as the Python program.
+
+---
+
+## Example
+
+```bash
+$ python3 main.py --image image.jpg
+
+Do you want to save results to a CSV file? (yes/no): yes
+Enter the CSV file name: users
+Enter an alias for the image (optional): myself
+
+Gender: Male
+Age: 18-20 years
+```
+
+---
+
+## Configuration
+
+The project provides configurable model parameters that can be adjusted for experimentation and refinement.
+
+### Confidence / Model Mean Values
+
+The `self.model_mean_values` values can be modified to experiment with the model's age and gender estimation results.
+
+```python
+self.model_mean_values
+```
+
+Adjusting these values may affect the resulting predictions.
+
+### Age Ranges
+
+The `self.age_list` list controls the age ranges returned by the application.
+
+```python
+self.age_list
+```
+
+The ranges can be modified to create larger or smaller age intervals depending on the intended use case.
+
+For example:
+
+```text
+18-20 years
+21-25 years
+26-30 years
+```
+
+---
+
+## CSV Records
+
+When CSV recording is enabled, results can be stored for later analysis.
+
+A typical workflow is:
+
+```text
+Image
+  |
+  v
+Age / Gender Estimation
+  |
+  v
+Alias
+  |
+  v
+CSV Record
+```
+
+This allows multiple images to be analyzed while keeping their results associated with a specified username or alias.
+
+---
+
+## Project Structure
+
+```text
+Identity-Estimation/
+│
+├── main.py
+├── requirements.txt
+├── models/
+│   └── pre-trained models
+│
+└── ...
+```
+
+---
+
+## Research and Learning Goals
+
+This project can be used to gain practical experience with:
+
+### Computer Vision
+
+- Image processing
+- Face detection
+- Facial feature analysis
+- Pre-trained machine-learning models
+- Model inference
+
+### Machine Learning
+
+- Model-based classification
+- Age estimation
+- Gender classification
+- Model parameter tuning
+- Prediction refinement
+
+### Python Development
+
+- File handling
+- CSV data storage
+- Command-line execution
+- Virtual environments
+- Dependency management
 
 ---
 
@@ -364,43 +325,45 @@ The resulting telemetry can then be investigated through a SIEM or EDR platform 
 
 This project is:
 
-- An adversary-emulation exercise
-- A cybersecurity research project
-- An Active Directory security laboratory tool
-- A defensive detection-testing utility
-- An educational resource
-- A controlled ransomware-behavior simulation
+- A computer-vision research project
+- An age-estimation experiment
+- A gender-estimation experiment
+- An educational machine-learning tool
+- A Python development project
+- A controlled image-analysis utility
 
 ## What This Project Is Not
 
-This project is **not intended to be deployed against production environments or systems without explicit authorization**.
+This project should **not** be treated as a definitive identity-verification system.
 
-It should not be used to:
+It should not be used as the sole mechanism for:
 
-- Destroy or disrupt systems
-- Encrypt unauthorized data
-- Access networks without permission
-- Obtain unauthorized credentials
-- Impact third-party systems
-- Deploy against real organizations without authorization
+- Determining a person's actual age
+- Determining a person's identity
+- Making high-impact decisions about individuals
+- Replacing government-issued identification
+- Replacing human verification
+- Making sensitive decisions solely from model predictions
+
+Model predictions can be inaccurate and should be treated as estimates.
 
 ---
 
 ## Disclaimer
 
-This software is provided for **educational and authorized security-testing purposes only**.
+This software is provided for **educational, research, and authorized testing purposes**.
 
-Ransomware and related attack techniques can cause significant data loss and operational disruption when used outside of a controlled environment.
+Age and gender predictions generated by machine-learning models are estimates and may be incorrect due to image quality, lighting, facial characteristics, model limitations, or other factors.
 
-Always use disposable test systems, test accounts, and non-sensitive data when performing experiments involving encryption or destructive behavior.
+Always consider privacy, consent, applicable laws, and organizational policies when processing images of individuals.
 
-You are responsible for ensuring that your use of this project complies with all applicable laws, regulations, contracts, and organizational policies.
+The author assumes no responsibility for decisions, damages, or consequences resulting from the use or misuse of this software.
 
 ---
 
 ## License
 
-Released under the [Apache-2.0 License](LICENSE).
+Released under the license included with this repository.
 
 ---
 
